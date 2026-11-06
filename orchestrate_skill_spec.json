@@ -1,0 +1,56 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "IBM Granite Interview Trainer Agent Skills",
+    "description": "Enterprise agent skill specification for IBM watsonx Orchestrate to coach candidates across technical, HR, and behavioral interview preparation.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api",
+      "description": "Local / IBM Code Engine instance endpoint"
+    }
+  ],
+  "paths": {
+    "/resume/parse": {
+      "post": {
+        "summary": "Parse Resume using IBM Docling",
+        "operationId": "parseResumeWithDocling",
+        "description": "Uploads and extracts skills, education, and detects gaps using IBM Docling Core.",
+        "responses": {
+          "200": { "description": "Candidate skills and structured analysis returned" }
+        }
+      }
+    },
+    "/questions/generate": {
+      "post": {
+        "summary": "Generate Personalized Interview Questions using IBM Granite",
+        "operationId": "generateGraniteQuestions",
+        "description": "Invokes IBM Granite on watsonx.ai with RAG grounding to generate technical, HR, and behavioral questions.",
+        "responses": {
+          "200": { "description": "Questions, model answers, and evaluation criteria generated" }
+        }
+      }
+    },
+    "/evaluate/answer": {
+      "post": {
+        "summary": "Evaluate Candidate Answer with IBM Granite",
+        "operationId": "evaluateCandidateAnswer",
+        "description": "Analyzes candidate answer against 6 objective metrics and generates professional improvements.",
+        "responses": {
+          "200": { "description": "Detailed metric scores and constructive feedback" }
+        }
+      }
+    },
+    "/roadmap/generate": {
+      "post": {
+        "summary": "Generate Personalized Preparation Roadmap",
+        "operationId": "generatePersonalizedRoadmap",
+        "description": "Creates a structured day-by-day learning schedule customized to candidate skill gaps.",
+        "responses": {
+          "200": { "description": "Structured daily tasks and practice roadmap" }
+        }
+      }
+    }
+  }
+}

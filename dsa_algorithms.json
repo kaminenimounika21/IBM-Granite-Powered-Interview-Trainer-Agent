@@ -1,0 +1,20 @@
+[
+  {
+    "id": "kb_dsa_01",
+    "title": "Time and Space Complexity Analysis & Master Theorem",
+    "category": "Technical",
+    "topic": "Data Structures & Algorithms",
+    "source": "IBM Technical Core Interview Standards",
+    "content": "Algorithm efficiency is evaluated using Big-O (upper bound), Big-Omega (lower bound), and Big-Theta (tight bound). Key data structure complexities: Arrays offer O(1) access and O(n) insert/delete. Hash Tables provide O(1) average lookup/insert but degrade to O(n) during severe collision clustering. Binary Search Trees offer O(log n) balanced search, degrading to O(n) if unbalanced (resolved via AVL or Red-Black trees).",
+    "key_takeaways": ["Asymptotic notation evaluates growth rate independent of hardware", "Space complexity must account for recursive stack frames", "Hash table load factor determines re-hashing frequency"]
+  },
+  {
+    "id": "kb_dsa_02",
+    "title": "Graph Traversal & Shortest Path Algorithms",
+    "category": "Technical",
+    "topic": "Data Structures & Algorithms",
+    "source": "IBM Algorithmic Engineering Playbook",
+    "content": "Breadth-First Search (BFS) uses a queue (FIFO) and discovers nodes layer by layer, guaranteeing the shortest path in unweighted graphs with time complexity O(V + E). Depth-First Search (DFS) uses a recursion stack or explicit LIFO stack to explore topological orderings and connected components. For weighted graphs, Dijkstra's algorithm uses a priority queue with O((V + E) log V) time, while Bellman-Ford accommodates negative edge weights with O(V * E).",
+    "key_takeaways": ["BFS uses queue for level-order and unweighted shortest paths", "DFS is optimal for cycle detection and topological sorting", "Dijkstra requires non-negative edge weights"]
+  }
+]

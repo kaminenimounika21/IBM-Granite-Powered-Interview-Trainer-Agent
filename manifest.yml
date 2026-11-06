@@ -1,0 +1,16 @@
+---
+# IBM Cloud Cloud Foundry / Code Engine App Manifest
+applications:
+  - name: ibm-granite-interview-trainer
+    memory: 512M
+    instances: 1
+    buildpack: python_buildpack
+    command: python run.py
+    env:
+      ENVIRONMENT: production
+      PORT: 8000
+      WATSONX_URL: "https://us-south.ml.cloud.ibm.com"
+      WATSONX_MODEL_ID: "ibm/granite-3-8b-instruct"
+      WATSONX_EMBEDDING_MODEL_ID: "ibm/slate-30m-english-rtr"
+      IBM_COS_ENDPOINT: "https://s3.us-south.cloud-object-storage.appdomain.cloud"
+      IBM_COS_BUCKET_NAME: "ibm-interview-resumes-vault"

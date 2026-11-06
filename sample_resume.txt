@@ -1,0 +1,27 @@
+Aarav Sharma
+Email: aarav.sharma@skillsbuild.ibm.edu
+Location: Bangalore, India
+Target Role: Cloud Application Developer
+
+SUMMARY
+Enthusiastic computer science graduate with hands-on experience building microservices and RESTful cloud APIs. Proficient in Python, SQL, Docker, and cloud architectures.
+
+EDUCATION
+B.Tech in Computer Science and Engineering
+National Institute of Technology (2022 - 2026) | CGPA: 8.8 / 10.0
+
+TECHNICAL SKILLS
+- Programming Languages: Python, Java, SQL, C++
+- Cloud & Infrastructure: Cloud Computing, Docker, REST APIs, Linux, Git
+- Databases: MySQL, PostgreSQL, Database Management (DBMS)
+- Frameworks & Tools: FastAPI, Flask, Postman, Git, Agile Development
+
+PROJECTS
+Cloud Microservice Event Pipeline (2025 - 2026)
+- Developed a high-throughput stateless REST microservice using Python and FastAPI.
+- Implemented Docker containerization and integrated automated health-check endpoints.
+- Optimized SQL database queries, reducing average API response latency by 35%.
+
+Automated Document Intelligence System (2025)
+- Built a document parsing utility extracting structured text and metadata from PDF files.
+- Applied NLP techniques to index and retrieve technical interview documentation.

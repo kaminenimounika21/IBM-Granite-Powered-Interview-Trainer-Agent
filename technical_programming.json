@@ -1,0 +1,29 @@
+[
+  {
+    "id": "kb_prog_01",
+    "title": "Python Memory Management & GIL",
+    "category": "Technical",
+    "topic": "Programming Concepts",
+    "source": "IBM SkillsBuild Advanced Python Engineering Handbook",
+    "content": "Python uses automatic memory management based on reference counting and a cyclic garbage collector. In CPython, the Global Interpreter Lock (GIL) is a mutex that prevents multiple native threads from executing Python bytecode simultaneously. For CPU-bound workloads, use multiprocessing or concurrent.futures.ProcessPoolExecutor to bypass GIL constraints.",
+    "key_takeaways": ["Reference counting + cyclic garbage collector", "GIL synchronizes thread access to CPython internal state", "Use multiprocessing for CPU-bound tasks and async/threading for I/O-bound tasks"]
+  },
+  {
+    "id": "kb_prog_02",
+    "title": "Object-Oriented Programming (OOP) Principles & SOLID",
+    "category": "Technical",
+    "topic": "Software Engineering",
+    "source": "IBM Enterprise Software Architecture Guide",
+    "content": "The four pillars of OOP are Encapsulation (bundling data and methods), Abstraction (hiding implementation complexity), Inheritance (reusing code across parent-child hierarchies), and Polymorphism (dynamic method overriding/overloading). The SOLID principles ensure scalable design: Single Responsibility, Open-Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion.",
+    "key_takeaways": ["Encapsulation, Abstraction, Inheritance, Polymorphism", "SOLID principles prevent tight coupling and brittle architectures", "Dependency Injection promotes loose coupling and testability"]
+  },
+  {
+    "id": "kb_prog_03",
+    "title": "RESTful API Design & HTTP Status Codes",
+    "category": "Technical",
+    "topic": "Web & Cloud Services",
+    "source": "IBM Cloud Microservices Architecture Guidelines",
+    "content": "REST APIs rely on stateless client-server communication using standard HTTP verbs: GET (read/idempotent), POST (create/non-idempotent), PUT (replace/idempotent), PATCH (partial update), and DELETE (remove/idempotent). Common status code families: 2xx (Success, 200 OK, 201 Created), 4xx (Client Error, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found), 5xx (Server Error, 500 Internal Error, 503 Service Unavailable).",
+    "key_takeaways": ["Stateless resource-oriented URI design", "Idempotency characteristics of HTTP verbs", "Strict status code semantics for client predictability"]
+  }
+]

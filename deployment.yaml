@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ibm-granite-interview-trainer
+  labels:
+    app: ibm-granite-interview-trainer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ibm-granite-interview-trainer
+  template:
+    metadata:
+      labels:
+        app: ibm-granite-interview-trainer
+    spec:
+      containers:
+        - name: trainer-agent
+          image: us.icr.io/ibm-interview-trainer/agent:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: PORT
+              value: "8000"
+            - name: WATSONX_URL
+              value: "https://us-south.ml.cloud.ibm.com"
+            - name: WATSONX_MODEL_ID
+              value: "ibm/granite-3-8b-instruct"
+            - name: WATSONX_APIKEY
+              valueFrom:
+                secretKeyRef:
+                  name: ibm-cloud-credentials
+                  key: watsonx-apikey
+            - name: WATSONX_PROJECT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: ibm-cloud-credentials
+                  key: watsonx-project-id
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ibm-granite-trainer-service
+spec:
+  type: ClusterIP
+  selector:
+    app: ibm-granite-interview-trainer
+  ports:
+    - port: 80
+      targetPort: 8000

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBM Granite-Powered Interview Trainer Agent</title>
+  <link rel="stylesheet" href="/static/css/carbon_theme.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230f62fe'/><text x='16' y='22' fill='%23ffffff' font-family='sans-serif' font-size='16' font-weight='bold' text-anchor='middle'>IBM</text></svg>">
+</head>
+<body>
+
+  <!-- Carbon Top Header -->
+  <header class="ibm-header">
+    <div class="ibm-header-title">
+      <svg width="24" height="24" viewBox="0 0 32 32" fill="#0f62fe">
+        <path d="M16 2L3 9l13 7 13-7-13-7zm0 18l-10-5.38V22l10 5.38 10-5.38v-7.38L16 20z" fill="#0f62fe"/>
+      </svg>
+      <span>IBM Granite Interview Trainer</span>
+      <span class="badge-ibm">SkillsBuild 2026</span>
+    </div>
+    <div class="ibm-header-actions">
+      <div id="system-status-chip" class="ibm-chip">
+        <span class="ibm-chip-dot"></span>
+        <span>IBM Granite 3.0 Active</span>
+      </div>
+      <!-- Candidate User Info & Top-Right Logout Button -->
+      <div id="header-user-section" style="display: flex; align-items: center; gap: 0.65rem;">
+        <div id="header-user-badge" class="header-user-badge" title="Authenticated Candidate">
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="#0f62fe">
+            <path d="M16 4a5 5 0 11-5 5 5 5 0 015-5m0-2a7 7 0 107 7 7 7 0 00-7-7zm10 28h-2v-5a5 5 0 00-5-5H13a5 5 0 00-5 5v5H6v-5a7 7 0 017-7h6a7 7 0 017 7z"/>
+          </svg>
+          <span id="header-candidate-name">Alex Chen</span>
+        </div>
+        <button id="header-logout-btn" class="btn-ibm-logout" onclick="confirmAndLogout()" title="Log out of current session">
+          <svg width="14" height="14" viewBox="0 0 32 32" fill="currentColor">
+            <path d="M6 30h12v-2H6V4h12V2H6a2 2 0 00-2 2v24a2 2 0 002 2z"/>
+            <path d="M20.6 21.4l5.6-5.4-5.6-5.4-1.4 1.4 3.2 3H10v2h12.4l-3.2 3z"/>
+          </svg>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- App Shell -->
+  <div class="ibm-app-container">
+
+    <!-- Sidebar Navigation (15 Distinct System Pages) -->
+    <aside class="ibm-sidebar">
+      <div class="ibm-sidebar-section">
+        <div class="ibm-sidebar-heading">Portal</div>
+        <a class="ibm-nav-item active" data-target="welcome-view">
+          <svg viewBox="0 0 32 32"><path d="M16 3L3 13.5l1.6 2.1L6 14.5V28h20V14.5l1.4 1.1 1.6-2.1L16 3zm8 23H8V12.9l8-6.5 8 6.5V26z"/></svg>
+          <span>1. Welcome & Overview</span>
+        </a>
+        <a class="ibm-nav-item" data-target="auth-view">
+          <svg viewBox="0 0 32 32"><path d="M12 4a5 5 0 11-5 5 5 5 0 015-5m0-2a7 7 0 107 7 7 7 0 00-7-7zm10 28h-2v-5a5 5 0 00-5-5H9a5 5 0 00-5 5v5H2v-5a7 7 0 017-7h6a7 7 0 017 7z"/></svg>
+          <span>2. Registration & Login</span>
+        </a>
+        <a class="ibm-nav-item" data-target="dashboard-view">
+          <svg viewBox="0 0 32 32"><path d="M4 4h10v10H4zm14 0h10v6H18zm0 10h10v14H18zm-14 4h10v10H4z"/></svg>
+          <span>3. Candidate Dashboard</span>
+        </a>
+      </div>
+
+      <div class="ibm-sidebar-section">
+        <div class="ibm-sidebar-heading">Candidate Intelligence</div>
+        <a class="ibm-nav-item" data-target="profile-view">
+          <svg viewBox="0 0 32 32"><path d="M16 4a5 5 0 11-5 5 5 5 0 015-5m0-2a7 7 0 107 7 7 7 0 00-7-7zm10 28h-2v-5a5 5 0 00-5-5H13a5 5 0 00-5 5v5H6v-5a7 7 0 017-7h6a7 7 0 017 7z"/></svg>
+          <span>4. Candidate Profile</span>
+        </a>
+        <a class="ibm-nav-item" data-target="resume-upload-view">
+          <svg viewBox="0 0 32 32"><path d="M26 18l-1.4-1.4-4.6 4.6V4h-2v17.2l-4.6-4.6L12 18l7 7 7-7zM6 26h20v2H6z"/></svg>
+          <span>5. Resume Upload</span>
+        </a>
+        <a class="ibm-nav-item" data-target="resume-analysis-view">
+          <svg viewBox="0 0 32 32"><path d="M25 5h-3V3a1 1 0 00-1-1H11a1 1 0 00-1 1v2H7a2 2 0 00-2 2v20a2 2 0 002 2h18a2 2 0 002-2V7a2 2 0 00-2-2zM12 4h8v3h-8zm13 23H7V7h3v3h12V7h3z"/></svg>
+          <span>6. Resume Analysis (Docling)</span>
+        </a>
+        <a class="ibm-nav-item" data-target="job-role-view">
+          <svg viewBox="0 0 32 32"><path d="M28 8H20V4a2 2 0 00-2-2H14a2 2 0 00-2 2v4H4a2 2 0 00-2 2v16a2 2 0 002 2h24a2 2 0 002-2V10a2 2 0 00-2-2zM14 4h4v4h-4zm14 22H4V10h24z"/></svg>
+          <span>7. Target Job Roles</span>
+        </a>
+      </div>
+
+      <div class="ibm-sidebar-section">
+        <div class="ibm-sidebar-heading">AI Interview Engines</div>
+        <a class="ibm-nav-item" data-target="question-generator-view">
+          <svg viewBox="0 0 32 32"><path d="M16 2a14 14 0 1014 14A14 14 0 0016 2zm1 22h-2v-2h2zm2.1-8.6l-.9.9c-.8.8-1.2 1.5-1.2 2.7h-2c0-1.6.6-2.5 1.5-3.4l1.2-1.2c.5-.5.8-1.1.8-1.8a2.5 2.5 0 00-5 0h-2a4.5 4.5 0 019 0c0 1.1-.5 2-1.4 2.8z"/></svg>
+          <span>8. AI Question Generator</span>
+        </a>
+        <a class="ibm-nav-item" data-target="model-answers-view">
+          <svg viewBox="0 0 32 32"><path d="M16 4a12 12 0 1012 12A12 12 0 0016 4zm-1 17l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L24 12z"/></svg>
+          <span>9. Model Answers & Tips</span>
+        </a>
+        <a class="ibm-nav-item" data-target="mock-interview-view">
+          <svg viewBox="0 0 32 32"><path d="M26 4H6a2 2 0 00-2 2v16a2 2 0 002 2h6l4 4 4-4h6a2 2 0 002-2V6a2 2 0 00-2-2zm0 18h-6.8l-3.2 3.2-3.2-3.2H6V6h20z"/></svg>
+          <span>10. Interactive Mock Interview</span>
+        </a>
+        <a class="ibm-nav-item" data-target="answer-eval-view">
+          <svg viewBox="0 0 32 32"><path d="M16 2a14 14 0 1014 14A14 14 0 0016 2zm0 26a12 12 0 1112-12 12 12 0 01-12 12zm-2-7h4v2h-4zm0-10h4v8h-4z"/></svg>
+          <span>11. Answer Evaluation</span>
+        </a>
+      </div>
+
+      <div class="ibm-sidebar-section">
+        <div class="ibm-sidebar-heading">Coaching & Governance</div>
+        <a class="ibm-nav-item" data-target="roadmap-view">
+          <svg viewBox="0 0 32 32"><path d="M28 6h-8V2H4a2 2 0 00-2 2v24a2 2 0 002 2h24a2 2 0 002-2V8a2 2 0 00-2-2zM4 4h14v4H4zm24 24H4V10h24z"/></svg>
+          <span>12. Preparation Roadmap</span>
+        </a>
+        <a class="ibm-nav-item" data-target="history-view">
+          <svg viewBox="0 0 32 32"><path d="M16 4A12 12 0 1028 16 12 12 0 0016 4zm0 22a10 10 0 1110-10 10 10 0 01-10 10zm1-15h-2v6l5.2 3.1 1-1.7-4.2-2.4z"/></svg>
+          <span>13. Practice History</span>
+        </a>
+        <a class="ibm-nav-item" data-target="kb-management-view">
+          <svg viewBox="0 0 32 32"><path d="M26 6H6a2 2 0 00-2 2v16a2 2 0 002 2h20a2 2 0 002-2V8a2 2 0 00-2-2zm-6 2v6l-3-2-3 2V8h6zM6 8h6v8l5-3.3 5 3.3V8h4v16H6z"/></svg>
+          <span>14. Knowledge Base (RAG)</span>
+        </a>
+        <a class="ibm-nav-item" data-target="settings-view">
+          <svg viewBox="0 0 32 32"><path d="M29.5 14.5l-2.7-.4a11 11 0 00-1.2-2.8l1.6-2.2a1.5 1.5 0 00-.2-1.9l-2.1-2.1a1.5 1.5 0 00-1.9-.2l-2.2 1.6a11 11 0 00-2.8-1.2l-.4-2.7A1.5 1.5 0 0016 1h-3a1.5 1.5 0 00-1.5 1.3l-.4 2.7a11 11 0 00-2.8 1.2L6.1 4.6a1.5 1.5 0 00-1.9.2L2.1 6.9a1.5 1.5 0 00-.2 1.9l1.6 2.2a11 11 0 00-1.2 2.8L-.4 14.5A1.5 1.5 0 00-1.8 16v3a1.5 1.5 0 001.3 1.5l2.7.4a11 11 0 001.2 2.8l-1.6 2.2a1.5 1.5 0 00.2 1.9l2.1 2.1a1.5 1.5 0 001.9.2l2.2-1.6a11 11 0 002.8 1.2l.4 2.7A1.5 1.5 0 0013 31h3a1.5 1.5 0 001.5-1.3l.4-2.7a11 11 0 002.8-1.2l2.2 1.6a1.5 1.5 0 001.9-.2l2.1-2.1a1.5 1.5 0 00.2-1.9l-1.6-2.2a11 11 0 001.2-2.8l2.7-.4A1.5 1.5 0 0031 16v-3a1.5 1.5 0 00-1.5-1.5zM16 21a5 5 0 115-5 5 5 0 01-5 5z"/></svg>
+          <span>15. Application Settings</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Container -->
+    <main class="ibm-main-content">
+
+      <!-- ================= 1. Welcome / Home Page ================= -->
+      <section id="welcome-view" class="page-view active">
+        <div class="page-header">
+          <h1>IBM Granite-Powered Interview Trainer Agent</h1>
+          <p>Problem Statement No. 22 • IBM SkillsBuild University Education Project 2026</p>
+        </div>
+
+        <div class="ibm-tile" style="background: linear-gradient(135deg, #0f62fe 0%, #001d6c 100%); color: #ffffff; padding: 2.5rem;">
+          <span class="ibm-tag" style="background: #ffffff; color: #0f62fe; font-weight: 700;">IBM FOUNDATION AI</span>
+          <h2 style="font-size: 28px; margin: 0.75rem 0; font-weight: 400;">Personalized AI Interview Coaching Powered by IBM Granite 3.0</h2>
+          <p style="font-size: 15px; max-width: 800px; line-height: 1.6; opacity: 0.9; margin-bottom: 1.5rem;">
+            Empowering students, freshers, and professionals through retrieval-augmented technical questions,
+            STAR behavioral interview coaching, IBM Docling resume gap intelligence, and live speech-enabled mock evaluations.
+          </p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn-ibm" style="background: #ffffff; color: #0f62fe; font-weight: 600;" onclick="navigateTo('dashboard-view')">Open Interview Dashboard →</button>
+            <button class="btn-ibm btn-ibm-secondary" style="border: 1px solid rgba(255,255,255,0.4);" onclick="navigateTo('resume-upload-view')">Upload Resume (IBM Docling)</button>
+            <button class="btn-ibm btn-ibm-secondary" style="border: 1px solid rgba(255,255,255,0.4);" onclick="navigateTo('mock-interview-view')">Start Mock Interview</button>
+          </div>
+        </div>
+
+        <div class="dashboard-metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Foundation Model</div>
+            <div class="metric-value" style="font-size: 20px;">IBM Granite 3.0</div>
+            <div class="metric-sub">watsonx.ai Enterprise Inference</div>
+          </div>
+          <div class="metric-card accent-teal">
+            <div class="metric-label">Document Intelligence</div>
+            <div class="metric-value" style="font-size: 20px;">IBM Docling</div>
+            <div class="metric-sub">Layout & Skill Extraction</div>
+          </div>
+          <div class="metric-card accent-purple">
+            <div class="metric-label">RAG Pipeline</div>
+            <div class="metric-value" style="font-size: 20px;">IBM Langflow</div>
+            <div class="metric-sub">Dense Slate Embeddings</div>
+          </div>
+          <div class="metric-card accent-green">
+            <div class="metric-label">Cloud Deployment</div>
+            <div class="metric-value" style="font-size: 20px;">IBM Code Engine</div>
+            <div class="metric-sub">IBM Cloud Lite Compatible</div>
+          </div>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Target Users & Coaching Pathways</div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
+            <div style="border: 1px solid #e0e0e0; padding: 1.25rem; background: #fafafa;">
+              <span class="ibm-tag tag-blue">Campus Placements</span>
+              <h3 style="font-size: 16px; margin: 0.5rem 0;">A. Students & Freshers</h3>
+              <p style="font-size: 13px; color: #525252; line-height: 1.5;">Master technical core topics (DSA, DBMS, OS, Networks, OOP), build professional confidence, and conquer HR interviews with the STAR method.</p>
+              <button class="btn-ibm btn-ibm-ghost" style="margin-top: 1rem; width: 100%;" onclick="navigateTo('question-generator-view')">Practice Fresher Questions</button>
+            </div>
+            <div style="border: 1px solid #e0e0e0; padding: 1.25rem; background: #fafafa;">
+              <span class="ibm-tag tag-purple">Career Transition</span>
+              <h3 style="font-size: 16px; margin: 0.5rem 0;">B. Experienced Professionals</h3>
+              <p style="font-size: 13px; color: #525252; line-height: 1.5;">Deep dive into microservice architecture, distributed systems, high availability, database scaling, and managerial leadership trade-offs.</p>
+              <button class="btn-ibm btn-ibm-ghost" style="margin-top: 1rem; width: 100%;" onclick="navigateTo('mock-interview-view')">Take Advanced Mock</button>
+            </div>
+            <div style="border: 1px solid #e0e0e0; padding: 1.25rem; background: #fafafa;">
+              <span class="ibm-tag tag-green">Skill Gap Analysis</span>
+              <h3 style="font-size: 16px; margin: 0.5rem 0;">C. Active Job Seekers</h3>
+              <p style="font-size: 13px; color: #525252; line-height: 1.5;">Upload your resume for IBM Docling intelligence, identify missing prerequisite skills, and receive a tailored 7-day preparation roadmap.</p>
+              <button class="btn-ibm btn-ibm-ghost" style="margin-top: 1rem; width: 100%;" onclick="navigateTo('roadmap-view')">View My Roadmap</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ethical-ai-banner">
+          <div>
+            <strong>IBM SkillsBuild Responsible AI Commitment:</strong>
+            Our AI coaching evaluations and scoring models are grounded in verified engineering guidelines and designed to provide constructive interview preparation. They are not intended as hiring guarantees.
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 2. Candidate Registration & Login ================= -->
+      <section id="auth-view" class="page-view">
+        <div class="page-header">
+          <h1>Candidate Registration & Authentication</h1>
+          <p>Manage your IBM SkillsBuild candidate profile and interview records.</p>
+        </div>
+
+        <div class="ibm-tile" style="max-width: 600px; margin: 0 auto;">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Candidate Sign In / Registration</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input id="auth-name" class="form-input" type="text" value="Alex Chen" placeholder="e.g. Alex Chen">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address (IBM SkillsBuild / University)</label>
+            <input id="auth-email" class="form-input" type="email" value="alex.chen@skillsbuild.ibm.edu" placeholder="e.g. alex.chen@skillsbuild.ibm.edu">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password / Access Passphrase</label>
+            <input id="auth-password" class="form-input" type="password" value="ibm2026">
+          </div>
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button class="btn-ibm" style="flex: 1;" onclick="handleLogin()">Sign In & Access Dashboard</button>
+            <button class="btn-ibm btn-ibm-secondary" onclick="handleRegister()">Register New Candidate</button>
+          </div>
+          <div id="auth-status-msg" style="margin-top: 1rem; font-size: 13px;"></div>
+        </div>
+      </section>
+
+      <!-- ================= 3. Candidate Profile ================= -->
+      <section id="profile-view" class="page-view">
+        <div class="page-header">
+          <h1>Candidate Interview Profile</h1>
+          <p>Configure your target role, academic background, and interview preferences.</p>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Personal & Academic Details</div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Full Name</label>
+              <input id="prof-name" class="form-input" type="text">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input id="prof-email" class="form-input" type="email" readonly style="background: #f4f4f4;">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Experience Level</label>
+              <select id="prof-experience" class="form-select">
+                <option value="Fresher">Fresher (Campus Graduate)</option>
+                <option value="0-2 years">0–2 years (Junior Engineer)</option>
+                <option value="2-5 years">2–5 years (Mid-Level Engineer)</option>
+                <option value="5+ years">5+ years (Senior / Lead)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Education Qualification</label>
+              <input id="prof-education" class="form-input" type="text" placeholder="e.g. B.Tech Computer Science">
+            </div>
+            <div class="form-group">
+              <label class="form-label">College / Organization</label>
+              <input id="prof-college" class="form-input" type="text" placeholder="e.g. IBM SkillsBuild University Partner">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Preferred Company (Optional)</label>
+              <input id="prof-preferred-company" class="form-input" type="text" value="IBM">
+            </div>
+          </div>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Job Targeting & Technical Focus</div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Target Job Role</label>
+              <select id="prof-target-role" class="form-select">
+                <option value="Cloud Application Developer">Cloud Application Developer</option>
+                <option value="AI / RAG Engineer">AI / RAG Engineer (watsonx & Granite)</option>
+                <option value="Full Stack Developer">Full Stack Developer</option>
+                <option value="Backend Software Engineer">Backend Software Engineer</option>
+                <option value="DevOps & Cloud Engineer">DevOps & Cloud Engineer</option>
+                <option value="Data Analyst / Scientist">Data Analyst / Scientist</option>
+                <option value="Campus Placement / Fresher Generalist">Campus Placement / Fresher Generalist</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Industry</label>
+              <input id="prof-industry" class="form-input" type="text" value="Information Technology & Cloud Services">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Technical Skills (Comma Separated)</label>
+              <input id="prof-tech-skills" class="form-input" type="text" placeholder="Python, REST APIs, Cloud, SQL">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Programming Languages</label>
+              <input id="prof-prog-langs" class="form-input" type="text" placeholder="Python, Java, SQL, C++">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Interview Type</label>
+              <select id="prof-interview-type" class="form-select">
+                <option value="Mixed">Mixed (Technical + HR + Behavioral)</option>
+                <option value="Technical">Technical Only</option>
+                <option value="HR">HR Only</option>
+                <option value="Managerial">Managerial & Behavioral</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Interview Difficulty</label>
+              <select id="prof-difficulty" class="form-select">
+                <option value="Beginner">Beginner (Foundations & Syntax)</option>
+                <option value="Intermediate" selected>Intermediate (System & Logic)</option>
+                <option value="Advanced">Advanced (Scale, Architecture, Edge Cases)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Additional Preparation Requirements</label>
+            <textarea id="prof-additional-reqs" class="form-textarea" rows="2" placeholder="e.g. Focus on microservice fault tolerance and behavioral STAR answers."></textarea>
+          </div>
+          <button class="btn-ibm" onclick="saveProfileData()">Save & Synchronize Profile</button>
+        </div>
+      </section>
+
+      <!-- ================= 4. Resume Upload ================= -->
+      <section id="resume-upload-view" class="page-view">
+        <div class="page-header">
+          <h1>Resume Upload & Document Ingestion</h1>
+          <p>Powered by IBM Docling Core for hierarchical structure extraction and skill gap detection.</p>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Upload Candidate Resume (PDF, DOCX, TXT)</div>
+          </div>
+          <p style="color: #525252; font-size: 14px; margin-bottom: 1.5rem;">
+            Your document is parsed using <strong>IBM Docling</strong> to detect skills, project experiences, and education,
+            and vaulted in <strong>IBM Cloud Object Storage</strong> with candidate privacy guarantees.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">Target Role for Gap Benchmarking</label>
+            <select id="resume-target-role" class="form-select" style="max-width: 400px;">
+              <option value="Cloud Application Developer">Cloud Application Developer</option>
+              <option value="AI / RAG Engineer">AI / RAG Engineer</option>
+              <option value="Full Stack Developer">Full Stack Developer</option>
+              <option value="Backend Software Engineer">Backend Software Engineer</option>
+              <option value="DevOps & Cloud Engineer">DevOps & Cloud Engineer</option>
+              <option value="Campus Placement / Fresher Generalist">Campus Placement / Fresher Generalist</option>
+            </select>
+          </div>
+
+          <div style="border: 2px dashed #0f62fe; padding: 2.5rem; text-align: center; background: #f8fbff; margin-bottom: 1.5rem;">
+            <svg width="48" height="48" viewBox="0 0 32 32" fill="#0f62fe" style="margin-bottom: 0.75rem;">
+              <path d="M26 18l-1.4-1.4-4.6 4.6V4h-2v17.2l-4.6-4.6L12 18l7 7 7-7zM6 26h20v2H6z"/>
+            </svg>
+            <div style="font-weight: 600; font-size: 15px; margin-bottom: 0.5rem;">Select Resume Document</div>
+            <p style="font-size: 13px; color: #525252; margin-bottom: 1rem;">Supported formats: .pdf, .docx, .txt (Max 10MB)</p>
+            <input id="resume-file-input" type="file" accept=".pdf,.docx,.txt" style="display: inline-block; font-size: 13px;">
+          </div>
+
+          <button class="btn-ibm" onclick="uploadResumeFile()">Upload & Parse with IBM Docling</button>
+
+          <div id="resume-upload-status" style="display: none; margin-top: 1.5rem;"></div>
+        </div>
+      </section>
+
+      <!-- ================= 5. Resume Analysis (IBM Docling) ================= -->
+      <section id="resume-analysis-view" class="page-view">
+        <div class="page-header">
+          <h1>Resume Intelligence & Skill Gap Analysis</h1>
+          <p>Parsed using IBM Docling document tree extraction and benchmarked against industry roles.</p>
+        </div>
+
+        <div class="ibm-tile" style="border-left: 4px solid #0f62fe;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 id="analysis-cand-name" style="font-size: 20px; font-weight: 600;">Alex Chen</h2>
+              <div style="font-size: 13px; color: #525252;">Benchmarked for: <strong id="analysis-target-role">Cloud Application Developer</strong></div>
+              <div id="analysis-docling-meta" style="font-size: 12px; color: #0f62fe; margin-top: 0.25rem;">Parsed via IBM Docling Core 2.106.0</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 12px; color: #525252; text-transform: uppercase;">Profile Readiness Score</div>
+              <div id="analysis-score-number" style="font-size: 32px; font-weight: 700; color: #0f62fe;">72/100</div>
+              <div class="progress-bar-container" style="width: 150px;">
+                <div id="analysis-score-bar" class="progress-bar-fill" style="width: 72%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="ibm-tile">
+            <div class="ibm-tile-header">
+              <div class="ibm-tile-title">Extracted Candidate Skills (IBM Docling)</div>
+            </div>
+            <div id="analysis-extracted-skills" style="min-height: 80px;"></div>
+          </div>
+
+          <div class="ibm-tile">
+            <div class="ibm-tile-header">
+              <div class="ibm-tile-title">Detected Skill Gaps (Target Role Prereqs)</div>
+            </div>
+            <div id="analysis-missing-skills" style="min-height: 80px;"></div>
+          </div>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Academic & Experience Extraction</div>
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <strong>Education Summary:</strong>
+            <div id="analysis-education" style="font-size: 14px; color: #393939; margin-top: 0.25rem;"></div>
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <strong>Experience Highlights:</strong>
+            <div id="analysis-experience" style="font-size: 14px; color: #393939; margin-top: 0.25rem;"></div>
+          </div>
+          <div>
+            <strong>Identified Projects:</strong>
+            <ul id="analysis-projects" style="padding-left: 1.25rem; font-size: 14px; margin-top: 0.25rem; color: #393939;"></ul>
+          </div>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">AI Preparation Recommendations</div>
+          </div>
+          <ul id="analysis-recommendations" style="padding-left: 1.25rem; font-size: 14px; color: #161616; line-height: 1.6;"></ul>
+          <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+            <button class="btn-ibm" onclick="navigateTo('question-generator-view')">Generate Gap-Focused Questions →</button>
+            <button class="btn-ibm btn-ibm-secondary" onclick="navigateTo('roadmap-view')">Generate 7-Day Roadmap</button>
+          </div>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">IBM Docling Markdown Document Representation</div>
+          </div>
+          <pre id="analysis-docling-markdown" style="background: #161616; color: #52e896; padding: 1.25rem; font-family: monospace; font-size: 12px; overflow-x: auto; max-height: 250px;"></pre>
+        </div>
+      </section>
+
+      <!-- ================= 6. Interview Preparation Dashboard ================= -->
+      <section id="dashboard-view" class="page-view">
+        <div class="page-header">
+          <h1>Interview Preparation Dashboard</h1>
+          <p>Real-time analytics, skill benchmarks, and active preparation metrics.</p>
+        </div>
+
+        <!-- Candidate Welcome Banner -->
+        <div class="ibm-tile" style="background: #ffffff; border-left: 4px solid #0f62fe; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div style="font-size: 12px; text-transform: uppercase; color: #525252; letter-spacing: 0.5px;">Active Candidate</div>
+            <h2 id="dash-candidate-name" style="font-size: 22px; font-weight: 600; color: #161616;">Alex Chen</h2>
+            <div style="font-size: 13px; color: #525252; margin-top: 0.25rem;">
+              Target Role: <strong id="dash-target-role">Cloud Application Developer</strong>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="font-size: 12px; color: #525252;">Preparation Progress</div>
+            <div id="dash-progress-text" style="font-size: 20px; font-weight: 700; color: #0f62fe;">40% Complete</div>
+            <div class="progress-bar-container" style="width: 180px;">
+              <div id="dash-progress-fill" class="progress-bar-fill" style="width: 40%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Metric Cards -->
+        <div class="dashboard-metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Questions Practiced</div>
+            <div id="metric-total-q" class="metric-value">0</div>
+            <div class="metric-sub">Across All Tracks</div>
+          </div>
+          <div class="metric-card accent-teal">
+            <div class="metric-label">Mocks Completed</div>
+            <div id="metric-mocks-count" class="metric-value">0</div>
+            <div class="metric-sub">Full Simulations</div>
+          </div>
+          <div class="metric-card accent-green">
+            <div class="metric-label">Average Practice Score</div>
+            <div id="metric-avg-score" class="metric-value">75.0%</div>
+            <div class="metric-sub">IBM Granite Evaluated</div>
+          </div>
+          <div class="metric-card accent-purple">
+            <div class="metric-label">Resume Readiness</div>
+            <div id="metric-readiness" class="metric-value">72/100</div>
+            <div class="metric-sub">IBM Docling Benchmark</div>
+          </div>
+        </div>
+
+        <!-- Strong Skills & Gaps -->
+        <div class="form-grid-2">
+          <div class="ibm-tile">
+            <div class="ibm-tile-header">
+              <div class="ibm-tile-title">Strong Skills Identified</div>
+            </div>
+            <div id="dash-strong-skills" style="min-height: 80px;"></div>
+          </div>
+
+          <div class="ibm-tile">
+            <div class="ibm-tile-header">
+              <div class="ibm-tile-title">Skill Gaps to Address</div>
+            </div>
+            <div id="dash-skill-gaps" style="min-height: 80px;"></div>
+          </div>
+        </div>
+
+        <!-- Recommended Next Activities -->
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Recommended Next Preparation Activities</div>
+          </div>
+          <div id="dash-recommended-activities"></div>
+          <div style="margin-top: 1.25rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn-ibm" onclick="navigateTo('mock-interview-view')">Start Mock Interview Session</button>
+            <button class="btn-ibm btn-ibm-secondary" onclick="navigateTo('question-generator-view')">Generate AI Questions</button>
+            <button class="btn-ibm btn-ibm-ghost" onclick="navigateTo('roadmap-view')">Open 7-Day Roadmap</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 7. Job Role Selection ================= -->
+      <section id="job-role-view" class="page-view">
+        <div class="page-header">
+          <h1>Job Role Selection & Industry Tracks</h1>
+          <p>Select or customize your target career track to calibrate AI interview difficulty.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+          <div class="ibm-tile" style="border-top: 3px solid #0f62fe;">
+            <span class="ibm-tag tag-blue">Cloud Services</span>
+            <h3 style="font-size: 18px; margin: 0.5rem 0;">Cloud Application Developer</h3>
+            <p style="font-size: 13px; color: #525252; margin-bottom: 1rem;">Focuses on microservices, containerization with Docker, REST API design, IBM Code Engine deployment, and distributed databases.</p>
+            <button class="btn-ibm" style="width: 100%;" onclick="selectRole('Cloud Application Developer')">Select Cloud Developer Track</button>
+          </div>
+
+          <div class="ibm-tile" style="border-top: 3px solid #8a3ffc;">
+            <span class="ibm-tag tag-purple">Enterprise AI</span>
+            <h3 style="font-size: 18px; margin: 0.5rem 0;">AI / RAG Engineer (Granite & watsonx)</h3>
+            <p style="font-size: 13px; color: #525252; margin-bottom: 1rem;">Focuses on foundation models, retrieval-augmented generation (RAG), vector embeddings (IBM Slate), Langflow pipelines, and Docling document processing.</p>
+            <button class="btn-ibm" style="width: 100%;" onclick="selectRole('AI / RAG Engineer')">Select AI Engineer Track</button>
+          </div>
+
+          <div class="ibm-tile" style="border-top: 3px solid #0072c3;">
+            <span class="ibm-tag tag-blue">Software Core</span>
+            <h3 style="font-size: 18px; margin: 0.5rem 0;">Backend Software Engineer</h3>
+            <p style="font-size: 13px; color: #525252; margin-bottom: 1rem;">Focuses on data structures, algorithmic complexities, SQL query optimization, transaction ACID isolation, and operating system internals.</p>
+            <button class="btn-ibm" style="width: 100%;" onclick="selectRole('Backend Software Engineer')">Select Backend Engineer Track</button>
+          </div>
+
+          <div class="ibm-tile" style="border-top: 3px solid #24a148;">
+            <span class="ibm-tag tag-green">Fresh Graduates</span>
+            <h3 style="font-size: 18px; margin: 0.5rem 0;">Campus Placement / Fresher Generalist</h3>
+            <p style="font-size: 13px; color: #525252; margin-bottom: 1rem;">Focuses on core computer science fundamentals, OOP pillars, basic DSA, HR questions, and STAR behavioral interview excellence.</p>
+            <button class="btn-ibm" style="width: 100%;" onclick="selectRole('Campus Placement / Fresher Generalist')">Select Campus Placement Track</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 8. AI Interview Question Generator ================= -->
+      <section id="question-generator-view" class="page-view">
+        <div class="page-header">
+          <h1>AI Interview Question Generator</h1>
+          <p>Powered by IBM Granite 3.0 on watsonx.ai with RAG grounding.</p>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Configure Generation Parameters</div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Job Role</label>
+              <input id="gen-job-role" class="form-input" type="text" value="Cloud Application Developer">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Interview Type</label>
+              <select id="gen-type" class="form-select">
+                <option value="Mixed" selected>Mixed (Technical, HR, Behavioral, Scenario)</option>
+                <option value="Technical">Technical Only (Programming, DSA, Cloud, SQL)</option>
+                <option value="HR">HR Only (Culture, Motivation, Fit)</option>
+                <option value="Behavioral">Behavioral Only (STAR Scenarios)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Difficulty Level</label>
+              <select id="gen-diff" class="form-select">
+                <option value="Beginner">Beginner (Foundations & Syntax)</option>
+                <option value="Intermediate" selected>Intermediate (System & Logic)</option>
+                <option value="Advanced">Advanced (Scale, Architecture, Edge Cases)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Number of Questions</label>
+              <select id="gen-count" class="form-select">
+                <option value="3">3 Questions</option>
+                <option value="5" selected>5 Questions (Standard Round)</option>
+                <option value="8">8 Questions (Comprehensive)</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-ibm" onclick="generateInterviewQuestions()">Generate Questions with IBM Granite</button>
+        </div>
+
+        <div id="generated-questions-container"></div>
+      </section>
+
+      <!-- ================= 9. Model Answers & Explanations ================= -->
+      <section id="model-answers-view" class="page-view">
+        <div class="page-header">
+          <h1>Model Answers & Detailed Explanations</h1>
+          <p>Authoritative enterprise reference answers grounded in IBM technical and behavioral guidelines.</p>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Curated Technical & Behavioral Benchmark Answers</div>
+          </div>
+          <p style="color: #525252; font-size: 14px; margin-bottom: 1.5rem;">
+            Review these model answers generated by <strong>IBM Granite 3.0</strong> to understand the depth, structure,
+            and vocabulary expected by enterprise hiring managers.
+          </p>
+
+          <div class="question-card">
+            <div class="question-card-category">
+              <span class="ibm-tag tag-blue">Technical • Microservices</span>
+              <span class="ibm-tag tag-purple">Intermediate</span>
+            </div>
+            <div class="question-text">How do you ensure data consistency across distributed microservices without distributed two-phase commit locks?</div>
+            <div style="background: #f4f4f4; border-left: 3px solid #0f62fe; padding: 1rem; font-size: 13px; line-height: 1.6; margin-bottom: 0.75rem;">
+              <strong>IBM Granite Model Answer:</strong><br>
+              In modern distributed microservices, we avoid synchronous Two-Phase Commit (2PC) locks because they create single points of failure
+              and severe latency penalties. Instead, we implement the <strong>Saga Pattern</strong>. A Saga is a sequence of local transactions where
+              each microservice updates its own local database and emits an event or message. If a step fails, the saga executes compensating transactions
+              to undo previous changes. We can orchestrate sagas either through choreography (event-driven via Kafka/RabbitMQ) or orchestration (a central coordinator
+              managing state machines).
+            </div>
+            <div style="font-size: 12px; color: #525252;">
+              <strong>Key Evaluation Criteria:</strong> Saga pattern definition • Event-driven choreography vs orchestration • Compensating transactions.
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-card-category">
+              <span class="ibm-tag tag-green">HR & Behavioral</span>
+              <span class="ibm-tag tag-purple">STAR Method</span>
+            </div>
+            <div class="question-text">Tell me about a time you made a mistake on a team project. How did you handle it?</div>
+            <div style="background: #f4f4f4; border-left: 3px solid #24a148; padding: 1rem; font-size: 13px; line-height: 1.6; margin-bottom: 0.75rem;">
+              <strong>IBM Granite Model Answer:</strong><br>
+              <strong>Situation:</strong> During a sprint deployment, I mistakenly merged a configuration change that pointed our staging service to an unindexed database view.<br>
+              <strong>Task:</strong> Our automated integration tests began failing, blocking 3 teammates from validating their features.<br>
+              <strong>Action:</strong> I immediately took ownership, reverted the commit within 10 minutes to unblock the team, and conducted a blameless post-mortem. I added a pre-merge CI linting check to ensure all view queries validate index coverage automatically.<br>
+              <strong>Result:</strong> We eliminated that failure category entirely, and the team completed the sprint with zero production defects.
+            </div>
+            <div style="font-size: 12px; color: #525252;">
+              <strong>Key Coaching Tip:</strong> Never blame teammates or hide errors. Senior interviewers prioritize intellectual honesty, rapid remediation, and systemic prevention.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 10. Interactive Mock Interview ================= -->
+      <section id="mock-interview-view" class="page-view">
+        <div class="page-header">
+          <h1>Interactive Mock Interview Simulation</h1>
+          <p>Practice timed interview questions with real-time voice speech recognition and AI evaluation.</p>
+        </div>
+
+        <!-- Initial Setup Panel -->
+        <div id="mock-intro-panel" class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Start a New Mock Interview Round</div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Job Role</label>
+              <input id="mock-role-input" class="form-input" type="text" value="Cloud Application Developer">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Interview Type</label>
+              <select id="mock-type-select" class="form-select">
+                <option value="Mixed" selected>Mixed (Technical, HR, Behavioral, Scenario)</option>
+                <option value="Technical">Technical Only</option>
+                <option value="HR">HR Only</option>
+                <option value="Behavioral">Behavioral Only</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Question Count</label>
+              <select id="mock-count-select" class="form-select">
+                <option value="3">3 Questions (Quick Practice)</option>
+                <option value="5" selected>5 Questions (Standard Round)</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-ibm" onclick="startMockSession()">Begin Mock Interview Session →</button>
+        </div>
+
+        <!-- Live Interview Runner Stepper -->
+        <div id="mock-runner-panel" style="display: none;">
+          <div class="ibm-tile" style="border-top: 4px solid #0f62fe;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div>
+                <span id="mock-stepper-title" style="font-size: 18px; font-weight: 600;">Question 1 of 5</span>
+                <span id="mock-category-tag" class="ibm-tag tag-blue" style="margin-left: 0.5rem;">Technical</span>
+                <span id="mock-difficulty-tag" class="ibm-tag tag-purple">Intermediate</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 18px; font-weight: 700; color: #0f62fe;">
+                <span>⏱</span>
+                <span id="mock-timer-display">00:00</span>
+              </div>
+            </div>
+
+            <div id="mock-active-question-text" class="question-text" style="font-size: 18px; margin: 1.25rem 0;">
+              Loading question...
+            </div>
+
+            <div class="form-group">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <label class="form-label" style="margin-bottom: 0;">Your Answer (Type or Speak Aloud):</label>
+                <button class="voice-recorder-btn" onclick="toggleVoiceRecording('mock-user-answer-text', this)">
+                  <span>🎙 Speak Your Answer (Voice-to-Text)</span>
+                </button>
+              </div>
+              <textarea id="mock-user-answer-text" class="form-textarea" rows="6" placeholder="Speak clearly or type your detailed response here..."></textarea>
+            </div>
+
+            <div style="display: flex; gap: 1rem;">
+              <button id="mock-submit-btn" class="btn-ibm" onclick="submitMockCurrentAnswer()">Submit Answer for AI Evaluation</button>
+            </div>
+
+            <div id="mock-eval-inline-result" style="display: none;"></div>
+          </div>
+        </div>
+
+        <!-- Interview Summary Panel -->
+        <div id="mock-summary-panel" style="display: none;" class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">🎉 Mock Interview Round Completed!</div>
+          </div>
+          <div style="text-align: center; padding: 2rem;">
+            <div style="font-size: 14px; color: #525252; text-transform: uppercase;">Average Performance Score</div>
+            <div id="mock-summary-score" style="font-size: 48px; font-weight: 700; color: #0f62fe; margin: 0.5rem 0;">82.0%</div>
+            <p style="font-size: 14px; color: #525252; margin-bottom: 1.5rem;">
+              Completed <span id="mock-summary-count">5</span> questions evaluated by IBM Granite 3.0.
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1rem;">
+              <button class="btn-ibm" onclick="navigateTo('dashboard-view')">Return to Dashboard</button>
+              <button class="btn-ibm btn-ibm-secondary" onclick="navigateTo('history-view')">View Detailed History</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= 11. Answer Evaluation ================= -->
+      <section id="answer-eval-view" class="page-view">
+        <div class="page-header">
+          <h1>Personalized Answer Improvement & Evaluation</h1>
+          <p>Submit any interview answer for granular breakdown across 6 objective evaluation criteria.</p>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Evaluate Candidate Answer</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Interview Question</label>
+            <input id="eval-question-input" class="form-input" type="text" value="How do you design RESTful microservices for high availability, and how do you handle partial network failures?">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="eval-category-select" class="form-select">
+                <option value="Technical" selected>Technical</option>
+                <option value="HR">HR</option>
+                <option value="Behavioral">Behavioral (STAR)</option>
+                <option value="Scenario-Based">Scenario-Based</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Voice Speech Input</label>
+              <div style="padding-top: 0.2rem;">
+                <button class="voice-recorder-btn" style="width: 100%;" onclick="toggleVoiceRecording('eval-user-answer-input', this)">
+                  <span>🎙 Speak Your Answer (Voice-to-Text)</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Candidate Draft Answer</label>
+            <textarea id="eval-user-answer-input" class="form-textarea" rows="5" placeholder="Type or speak your answer..."></textarea>
+          </div>
+          <button class="btn-ibm" onclick="evaluateStandaloneAnswer()">Evaluate Answer with IBM Granite</button>
+        </div>
+
+        <div id="standalone-eval-result"></div>
+      </section>
+
+      <!-- ================= 12. Personalized Preparation Roadmap ================= -->
+      <section id="roadmap-view" class="page-view">
+        <div class="page-header">
+          <h1>Personalized 7-Day Preparation Roadmap</h1>
+          <p>Generated by IBM Granite based on candidate skill gaps, target role, and experience level.</p>
+        </div>
+
+        <div class="ibm-tile" style="background: #ffffff; border-left: 4px solid #0f62fe;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div>
+              <h2 style="font-size: 18px; font-weight: 600;">Customized Preparation Schedule</h2>
+              <div id="roadmap-cand-info" style="font-size: 13px; color: #525252; margin-top: 0.25rem;"></div>
+            </div>
+            <button class="btn-ibm btn-ibm-ghost" onclick="loadRoadmapData()">Regenerate Roadmap</button>
+          </div>
+        </div>
+
+        <div id="roadmap-cards-container"></div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Recommended IBM SkillsBuild Learning Pathways</div>
+          </div>
+          <ul id="roadmap-skillsbuild-courses" style="padding-left: 1.25rem; font-size: 14px; color: #161616; line-height: 1.7;"></ul>
+        </div>
+      </section>
+
+      <!-- ================= 13. Practice History ================= -->
+      <section id="history-view" class="page-view">
+        <div class="page-header">
+          <h1>Practice History & Candidate Logs</h1>
+          <p>Review past practiced questions, mock sessions, and IBM Granite performance trends.</p>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Recently Evaluated Answers</div>
+          </div>
+          <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+            <thead>
+              <tr style="background: #f4f4f4; border-bottom: 2px solid #e0e0e0;">
+                <th style="padding: 0.75rem;">Question Prompt</th>
+                <th style="padding: 0.75rem;">Category</th>
+                <th style="padding: 0.75rem;">Score</th>
+                <th style="padding: 0.75rem;">Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="history-questions-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================= 14. Knowledge Base Management ================= -->
+      <section id="kb-management-view" class="page-view">
+        <div class="page-header">
+          <h1>Interview Knowledge Base (RAG & IBM Langflow)</h1>
+          <p>Inspect indexed enterprise documents, vector embeddings, and add custom interview guides.</p>
+        </div>
+
+        <div class="dashboard-metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Knowledge Base Status</div>
+            <div id="kb-count-badge" class="metric-value">16 Chunks</div>
+            <div class="metric-sub">Docling Parsed & Indexed</div>
+          </div>
+          <div class="metric-card accent-teal">
+            <div class="metric-label">Dense Vector Embeddings</div>
+            <div id="kb-embedding-name" class="metric-value" style="font-size: 16px;">ibm/slate-30m-english-rtr</div>
+            <div class="metric-sub">IBM Slate Dense Vectors</div>
+          </div>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Add Custom Interview Knowledge Document</div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Document Title</label>
+              <input id="kb-new-title" class="form-input" type="text" placeholder="e.g. Microservice Incident Post-Mortem Best Practices">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select id="kb-new-category" class="form-select">
+                <option value="Technical">Technical</option>
+                <option value="HR">HR</option>
+                <option value="Behavioral">Behavioral</option>
+                <option value="Company-Specific">Company-Specific</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Source Attribution</label>
+            <input id="kb-new-source" class="form-input" type="text" value="IBM Engineering Standards 2026">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Document Text Content</label>
+            <textarea id="kb-new-content" class="form-textarea" rows="4" placeholder="Enter interview knowledge text to be parsed via Docling and embedded with IBM Slate..."></textarea>
+          </div>
+          <button class="btn-ibm" onclick="addCustomKnowledgeDoc()">Index Document into RAG Knowledge Base</button>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">Indexed Knowledge Base Chunks (Live Semantic Store)</div>
+          </div>
+          <div id="kb-documents-list"></div>
+        </div>
+      </section>
+
+      <!-- ================= 15. Application Settings ================= -->
+      <section id="settings-view" class="page-view">
+        <div class="page-header">
+          <h1>Application Settings & IBM Cloud Credentials</h1>
+          <p>Configure your IBM watsonx.ai API keys, foundation model selection, and storage endpoints.</p>
+        </div>
+
+        <div class="ibm-tile" style="border-left: 4px solid #0f62fe;">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">IBM watsonx.ai Active Connection</div>
+          </div>
+          <div id="set-connection-status-box" style="margin-bottom: 1rem;"></div>
+          <button class="btn-ibm" onclick="testWatsonxConnection()">Test Live watsonx.ai Connection</button>
+          <div id="test-conn-result"></div>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">IBM watsonx.ai Foundation Model Settings</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">IBM Cloud API Key (WATSONX_APIKEY)</label>
+            <input id="set-watsonx-key" class="form-input" type="password" placeholder="Enter your IBM Cloud API Key">
+            <div class="form-helper">Generated from IBM Cloud Identity and Access Management (IAM).</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">watsonx.ai Project ID (WATSONX_PROJECT_ID)</label>
+            <input id="set-watsonx-project" class="form-input" type="text" placeholder="Enter your watsonx.ai Project GUID">
+            <div class="form-helper">Found in your watsonx.ai project settings tab.</div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">watsonx.ai Service URL</label>
+              <input id="set-watsonx-url" class="form-input" type="text" value="https://us-south.ml.cloud.ibm.com">
+            </div>
+            <div class="form-group">
+              <label class="form-label">IBM Granite Foundation Model ID</label>
+              <select id="set-watsonx-model" class="form-select">
+                <option value="ibm/granite-3-8b-instruct" selected>ibm/granite-3-8b-instruct (Recommended)</option>
+                <option value="ibm/granite-13b-chat-v2">ibm/granite-13b-chat-v2</option>
+                <option value="ibm/granite-20b-multilingual">ibm/granite-20b-multilingual</option>
+                <option value="ibm/granite-34b-code-instruct">ibm/granite-34b-code-instruct</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="ibm-tile">
+          <div class="ibm-tile-header">
+            <div class="ibm-tile-title">IBM Cloud Storage Configuration</div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">IBM Cloud Object Storage Endpoint</label>
+              <input id="set-cos-endpoint" class="form-input" type="text" value="https://s3.us-south.cloud-object-storage.appdomain.cloud">
+            </div>
+            <div class="form-group">
+              <label class="form-label">IBM COS Bucket Name</label>
+              <input id="set-cos-bucket" class="form-input" type="text" value="ibm-interview-resumes-vault">
+            </div>
+          </div>
+          <button class="btn-ibm" onclick="saveSettingsData()">Save Settings & Persist to .env</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+  <script>
+    function selectRole(roleName) {
+      document.getElementById('prof-target-role').value = roleName;
+      document.getElementById('gen-job-role').value = roleName;
+      document.getElementById('resume-target-role').value = roleName;
+      document.getElementById('mock-role-input').value = roleName;
+      state.candidate.target_role = roleName;
+      alert('Selected target role: ' + roleName + '. Question generator and mock interview calibrated!');
+      navigateTo('question-generator-view');
+    }
+
+    async function handleLogin() {
+      const email = document.getElementById('auth-email').value.trim();
+      const name = document.getElementById('auth-name').value.trim();
+      if (!email) {
+        alert('Please enter your candidate email address.');
+        return;
+      }
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name: name || 'Candidate' })
+      });
+      const d = await res.json();
+      const cand = d.candidate || { email, name: name || 'Candidate', target_role: 'Cloud Application Developer', experience_level: 'Fresher' };
+      setCandidateSession(cand);
+      document.getElementById('auth-status-msg').innerHTML = '<span style="color: #24a148; font-weight: 600;">✓ Signed in successfully as ' + cand.name + '!</span>';
+      setTimeout(() => navigateTo('dashboard-view'), 600);
+    }
+
+    async function handleRegister() {
+      const email = document.getElementById('auth-email').value.trim();
+      const name = document.getElementById('auth-name').value.trim();
+      const password = document.getElementById('auth-password').value;
+      if (!email || !name) {
+        alert('Please enter your full name and email address to register.');
+        return;
+      }
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+      const d = await res.json();
+      const cand = { email, name, target_role: 'Cloud Application Developer', experience_level: 'Fresher' };
+      setCandidateSession(cand);
+      document.getElementById('auth-status-msg').innerHTML = '<span style="color: #24a148; font-weight: 600;">✓ Registered and signed in as ' + name + '!</span>';
+      setTimeout(() => navigateTo('dashboard-view'), 600);
+    }
+  </script>
+</body>
+</html>

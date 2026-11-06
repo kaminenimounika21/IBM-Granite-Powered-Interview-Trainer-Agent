@@ -1,0 +1,20 @@
+[
+  {
+    "id": "kb_cloud_01",
+    "title": "Cloud Native Architecture: Containers, Kubernetes & 12-Factor App",
+    "category": "Technical",
+    "topic": "Cloud Computing",
+    "source": "IBM Cloud Architecture Center & Red Hat OpenShift Docs",
+    "content": "Cloud-native architectures leverage containerization (Docker/OCI) and orchestration (Kubernetes, IBM Code Engine) for resilience and autoscaling. The Twelve-Factor App methodology mandates: declarative configuration stored in environment variables, stateless disposable processes, backing services treated as attached resources, and parity between development and production. Kubernetes concepts: Pods (smallest deployable units), Deployments (declarative replica management), and Services (stable network endpoints with built-in load balancing).",
+    "key_takeaways": ["Stateless microservices allow seamless horizontal scaling", "Kubernetes controllers reconcile desired state with current state", "Twelve-Factor principles minimize divergence across deployment targets"]
+  },
+  {
+    "id": "kb_ai_01",
+    "title": "IBM Granite Foundation Models, RAG Architecture & watsonx",
+    "category": "Technical",
+    "topic": "Artificial Intelligence & RAG",
+    "source": "IBM watsonx.ai Technical Whitepaper & Granite Model Documentation",
+    "content": "IBM Granite is a flagship family of open enterprise foundation models designed for enterprise language and code tasks, trained on rigorously curated business, academic, and code datasets. Retrieval-Augmented Generation (RAG) grounds Granite foundation models in external knowledge documents: 1. Ingestion & layout parsing using IBM Docling, 2. Dense semantic vector embedding generation using IBM Slate (ibm/slate-30m-english-rtr), 3. Vector similarity retrieval via cosine distance, 4. Prompt synthesis with context grounding to prevent hallucinations and provide verifiable source citations.",
+    "key_takeaways": ["IBM Granite provides transparent, enterprise-grade generative intelligence", "Docling handles multiformat document layout and structured extraction", "IBM Slate dense embeddings power high-precision semantic retrieval in RAG"]
+  }
+]

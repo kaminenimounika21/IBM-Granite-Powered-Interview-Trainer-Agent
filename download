@@ -1,0 +1,4 @@
+WATSONX_URL=https://us-south.ml.cloud.ibm.com
+WATSONX_MODEL_ID=ibm/granite-3-8b-instruct
+IBM_COS_ENDPOINT=https://s3.us-south.cloud-object-storage.appdomain.cloud
+IBM_COS_BUCKET_NAME=ibm-interview-resumes-vault

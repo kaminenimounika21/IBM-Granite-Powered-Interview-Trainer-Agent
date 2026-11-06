@@ -1,0 +1,29 @@
+[
+  {
+    "id": "kb_hr_01",
+    "title": "Mastering the STAR Method for Behavioral Interviews",
+    "category": "Behavioral",
+    "topic": "Behavioral Interview Mastery",
+    "source": "IBM SkillsBuild Career Readiness & Interview Coaching Guide",
+    "content": "The STAR framework is the global standard for structuring behavioral responses: Situation (Set the context, company, or project setting), Task (Explain the specific technical or business problem you needed to resolve), Action (Detail the precise engineering actions, technologies, and collaborative decisions YOU personally made), and Result (Quantify the measurable business or technical outcome, e.g., 'reduced API latency by 35% and unblocked 4 developers'). Never fabricate achievements; emphasize authentic teamwork and root-cause problem solving.",
+    "key_takeaways": ["Spend 15% on Situation, 15% on Task, 50% on Action, and 20% on Result", "Use 'I' to delineate personal contribution within team achievements", "Quantify results with concrete metrics (latency, percentage, reliability)"]
+  },
+  {
+    "id": "kb_hr_02",
+    "title": "Answering 'Tell Me About Yourself' & 'Why This Company?'",
+    "category": "HR",
+    "topic": "Human Resources & Culture",
+    "source": "IBM Talent Acquisition Best Practices Handbook",
+    "content": "For 'Tell me about yourself', follow the Present-Past-Future model: begin with your current educational background and technical core focus, summarize past key projects or internships where you delivered tangible value, and conclude with why your future aspirations align with this specific target role. For 'Why this company?', connect your technical interests with the organization's technological contributions (such as IBM's open enterprise AI governance with Granite, hybrid cloud leadership with Red Hat, or commitment to ethical computing).",
+    "key_takeaways": ["Present-Past-Future structure keeps the response within 90-120 seconds", "Avoid reciting your resume line by line; narrate the driving passion behind your work", "Ground company interest in specific products, missions, and engineering culture"]
+  },
+  {
+    "id": "kb_hr_03",
+    "title": "Conflict Resolution, Leadership & Adaptability Scenarios",
+    "category": "Behavioral",
+    "topic": "Behavioral & Managerial Scenarios",
+    "source": "IBM Leadership Competencies & Team Dynamics",
+    "content": "When asked about team conflicts (e.g. disagreements over architectural choices or code reviews), focus on objective data and shared user outcomes rather than personal friction: 'We established clear benchmarking tests to measure both approaches against our latency SLA rather than arguing hypothetically.' Show empathy, active listening, and willingness to adapt when presented with valid counter-evidence.",
+    "key_takeaways": ["Frame conflict as collaborative technical evaluation rather than personal dispute", "Use objective benchmarks, customer requirements, or metrics as decision tiebreakers", "Demonstrate intellectual humility and team-first orientation"]
+  }
+]

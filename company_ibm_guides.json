@@ -1,0 +1,20 @@
+[
+  {
+    "id": "kb_company_ibm_01",
+    "title": "IBM Engineering Culture, watsonx & Hybrid Cloud Philosophy",
+    "category": "Company-Specific",
+    "topic": "IBM Technical Preparation",
+    "source": "IBM SkillsBuild Career Portal & IBM Engineering Standards",
+    "content": "IBM's core architectural vision centers on Hybrid Cloud (powered by Red Hat OpenShift, IBM Cloud Code Engine, and Container Registry) and Enterprise Artificial Intelligence (powered by watsonx.ai, IBM Granite foundation models, IBM Docling, and watsonx Orchestrate). Interviewers at IBM look for: 1. Deep foundational grasp of data structures, algorithms, and clean system design, 2. Appreciation for open-source ecosystems and standards, 3. Uncompromising adherence to ethical and trustworthy AI principles (fairness, explainability, robustness, and data privacy).",
+    "key_takeaways": ["IBM combines hybrid cloud infrastructure with open enterprise AI", "IBM Granite models are built for transparency and enterprise governance", "Demonstrating ethical AI awareness is a key differentiator in IBM technical interviews"]
+  },
+  {
+    "id": "kb_industry_01",
+    "title": "Industry Expectations for Freshers vs Experienced Engineers",
+    "category": "Industry",
+    "topic": "Industry Standards & Hiring Benchmarks",
+    "source": "Global Software Engineering Hiring Standards 2026",
+    "content": "For Freshers and Campus Placements: Companies prioritize core problem-solving aptitude, solid foundations in DSA, OOP, DBMS, OS, and Networks, eager coachability, and clear verbal communication. For Experienced Engineers (2-5+ years): Interviewers evaluate system design scalability, trade-off analysis (e.g. CAP theorem, caching vs database load), debugging under pressure, production incident post-mortems, microservice failure modes, and mentorship capabilities.",
+    "key_takeaways": ["Freshers are evaluated on fundamental computer science breadth and learning velocity", "Experienced candidates must articulate architectural trade-offs and operational resilience", "Clarity of communication and structured thinking is universally required across all levels"]
+  }
+]

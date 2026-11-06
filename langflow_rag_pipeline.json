@@ -1,0 +1,114 @@
+{
+  "name": "IBM Granite & Docling Interview RAG Pipeline",
+  "description": "Enterprise RAG workflow for Interview Trainer Agent powered by IBM Granite 3.0, IBM Docling, and IBM Slate embeddings on watsonx.ai",
+  "version": "1.0.0",
+  "provider": "IBM Langflow & IBM watsonx.ai",
+  "data": {
+    "nodes": [
+      {
+        "id": "node_docling_loader_1",
+        "type": "DoclingDocumentLoader",
+        "position": { "x": 100, "y": 100 },
+        "data": {
+          "type": "DoclingDocumentLoader",
+          "node": {
+            "template": {
+              "document_path": { "value": "app/data/knowledge_base", "type": "str" },
+              "parser": { "value": "IBM Docling Core 2.106.0", "type": "str" },
+              "export_format": { "value": "markdown", "type": "str" }
+            },
+            "description": "Extracts structured layout and text from interview knowledge documents using IBM Docling."
+          }
+        }
+      },
+      {
+        "id": "node_text_splitter_2",
+        "type": "RecursiveCharacterSplitter",
+        "position": { "x": 350, "y": 100 },
+        "data": {
+          "type": "RecursiveCharacterSplitter",
+          "node": {
+            "template": {
+              "chunk_size": { "value": 500, "type": "int" },
+              "chunk_overlap": { "value": 50, "type": "int" },
+              "separators": { "value": ["\n\n", "\n", " ", ""], "type": "list" }
+            },
+            "description": "Splits documents into semantic chunks preserving headings and code snippets."
+          }
+        }
+      },
+      {
+        "id": "node_slate_embeddings_3",
+        "type": "WatsonxEmbeddings",
+        "position": { "x": 350, "y": 300 },
+        "data": {
+          "type": "WatsonxEmbeddings",
+          "node": {
+            "template": {
+              "model_id": { "value": "ibm/slate-30m-english-rtr", "type": "str" },
+              "project_id": { "value": "WATSONX_PROJECT_ID", "type": "str" },
+              "url": { "value": "https://us-south.ml.cloud.ibm.com", "type": "str" }
+            },
+            "description": "Generates 384-dimensional dense semantic vectors using IBM Slate."
+          }
+        }
+      },
+      {
+        "id": "node_vector_store_4",
+        "type": "WatsonxVectorStore",
+        "position": { "x": 650, "y": 200 },
+        "data": {
+          "type": "WatsonxVectorStore",
+          "node": {
+            "template": {
+              "search_type": { "value": "similarity_cosine", "type": "str" },
+              "top_k": { "value": 3, "type": "int" }
+            },
+            "description": "Retrieves top-k relevant knowledge chunks based on cosine distance."
+          }
+        }
+      },
+      {
+        "id": "node_prompt_template_5",
+        "type": "PromptTemplate",
+        "position": { "x": 900, "y": 200 },
+        "data": {
+          "type": "PromptTemplate",
+          "node": {
+            "template": {
+              "template": {
+                "value": "System: You are IBM Granite, an expert enterprise interview coach.\n\nContext Information from IBM Knowledge Base:\n{context}\n\nCandidate Question / Scenario:\n{question}\n\nCandidate Profile:\nTarget Role: {target_role}\nExperience Level: {experience_level}\n\nGenerate an expert, grounded answer with clear structure, follow-up questions, and citations to source material.\nAnswer:",
+                "type": "str"
+              }
+            },
+            "description": "Formats grounded context and candidate profile for IBM Granite."
+          }
+        }
+      },
+      {
+        "id": "node_granite_llm_6",
+        "type": "WatsonxLLM",
+        "position": { "x": 1150, "y": 200 },
+        "data": {
+          "type": "WatsonxLLM",
+          "node": {
+            "template": {
+              "model_id": { "value": "ibm/granite-3-8b-instruct", "type": "str" },
+              "decoding_method": { "value": "sample", "type": "str" },
+              "temperature": { "value": 0.7, "type": "float" },
+              "max_new_tokens": { "value": 1000, "type": "int" }
+            },
+            "description": "IBM Granite Foundation Model inference."
+          }
+        }
+      }
+    ],
+    "edges": [
+      { "source": "node_docling_loader_1", "target": "node_text_splitter_2" },
+      { "source": "node_text_splitter_2", "target": "node_vector_store_4" },
+      { "source": "node_slate_embeddings_3", "target": "node_vector_store_4" },
+      { "source": "node_vector_store_4", "target": "node_prompt_template_5" },
+      { "source": "node_prompt_template_5", "target": "node_granite_llm_6" }
+    ]
+  }
+}

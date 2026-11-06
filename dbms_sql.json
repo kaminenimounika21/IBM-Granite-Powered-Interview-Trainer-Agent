@@ -1,0 +1,20 @@
+[
+  {
+    "id": "kb_dbms_01",
+    "title": "ACID Properties & Transaction Isolation Levels",
+    "category": "Technical",
+    "topic": "Database Management Systems",
+    "source": "IBM Db2 & Cloudant Distributed Data Systems",
+    "content": "Relational transactions guarantee ACID properties: Atomicity (all-or-nothing completion), Consistency (transitions maintain database invariants), Isolation (concurrent transactions execute without interference), and Durability (committed changes persist across crashes). ANSI SQL defines four isolation levels: Read Uncommitted (dirty reads possible), Read Committed (prevents dirty reads, non-repeatable reads possible), Repeatable Read (prevents non-repeatable reads, phantom reads possible), and Serializable (strict serial execution).",
+    "key_takeaways": ["ACID guarantees transaction integrity", "Higher isolation levels increase locking overhead and deadlocks", "Two-Phase Locking (2PL) guarantees serializability"]
+  },
+  {
+    "id": "kb_dbms_02",
+    "title": "Database Indexing: B-Trees vs Hash Indexes & SQL Optimization",
+    "category": "Technical",
+    "topic": "Database Management Systems",
+    "source": "IBM Query Optimization & Data Engineering Manual",
+    "content": "Indexes dramatically accelerate query retrieval at the expense of insert/update latency. B-Tree / B+Tree indexes keep keys sorted in self-balancing balanced tree nodes, supporting both equality and range scans (e.g. BETWEEN, >, <). Hash indexes offer O(1) equality lookups but cannot perform range scans. SQL optimization techniques: use EXPLAIN to inspect query execution plans, avoid SELECT *, ensure indexed columns are not wrapped in functions, and normalize up to 3NF to eliminate redundancy.",
+    "key_takeaways": ["B+ Trees store records in leaves for fast sequential traversal", "Hash indexes only support point equality queries", "Composite index column order must match query filter prefixes"]
+  }
+]

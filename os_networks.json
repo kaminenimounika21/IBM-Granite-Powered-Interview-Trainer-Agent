@@ -1,0 +1,20 @@
+[
+  {
+    "id": "kb_os_01",
+    "title": "Processes vs Threads, Context Switching & Deadlocks",
+    "category": "Technical",
+    "topic": "Operating Systems",
+    "source": "IBM Linux & Systems Architecture Curriculum",
+    "content": "A process is an executing program instance with its own isolated virtual memory address space (text, data, heap, stack). A thread is a lightweight unit of execution within a process that shares the heap, global variables, and open file descriptors with sibling threads while maintaining its own program counter and stack. Coffman conditions for deadlocks: 1. Mutual Exclusion, 2. Hold and Wait, 3. No Preemption, 4. Circular Wait. Resolving deadlocks: Banker's algorithm, lock ordering, or timeout preemption.",
+    "key_takeaways": ["Processes have isolated address spaces; threads share heap and state", "Context switches between processes incur TLB flush penalties", "Four Coffman conditions must hold simultaneously for deadlocks"]
+  },
+  {
+    "id": "kb_net_01",
+    "title": "TCP vs UDP, Three-Way Handshake & OSI Model",
+    "category": "Technical",
+    "topic": "Computer Networks",
+    "source": "IBM Enterprise Networking Architecture",
+    "content": "TCP is a connection-oriented, reliable protocol that guarantees ordered delivery through sequence numbers, flow control (sliding window), and congestion control (Slow Start, AIMD). The TCP connection initiates via a three-way handshake: SYN -> SYN-ACK -> ACK, and closes via FIN -> ACK -> FIN -> ACK. UDP is connectionless and lightweight with zero transmission guarantees, suitable for real-time streaming, DNS, and VoIP where low latency outweighs packet loss.",
+    "key_takeaways": ["TCP three-way handshake establishes bidirectional sequence numbers", "Sliding window regulates receiver buffer capacity", "UDP offers minimal overhead without retransmission delay"]
+  }
+]
